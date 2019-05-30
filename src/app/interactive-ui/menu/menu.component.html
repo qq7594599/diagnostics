@@ -1,0 +1,18 @@
+<ul class="nav nav-primary">
+  <li class="nav-item" *ngFor="let item of dataSource" [ngClass]="{ 'submenu': item.expand, 'active': item.isActive }" >
+    <a [ngClass]="{ 'collapsed': item.children && !item.expand }" (click)="item.expand = !item.expand">
+      <i *ngIf="item.icon" class="fas" [ngClass]="item.icon"></i>
+      <p>{{item.name}}</p>
+      <span *ngIf="item.children" class="caret" [ngStyle]="{ 'transform': item.expand ? 'rotate(-180deg)': 'rotate(0)' }"></span>
+    </a>
+    <div class="collapse" *ngIf="item.children" [ngClass]="{ 'show': item.expand }">
+        <ul class="nav nav-collapse">
+            <li *ngFor="let subItem of item.children">
+              <a [routerLink]="subItem.routeTo" routerLinkActive #rla="routerLinkActive" appVar [isActive]="rla.isActive" (setter)="item.isActive = rla.isActive">
+                <span class="sub-item">{{subItem.name}}</span>
+              </a>
+            </li>
+          </ul>
+    </div>
+  </li>
+</ul>
